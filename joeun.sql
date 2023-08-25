@@ -288,7 +288,7 @@ AND e.salary = t.max_sal;
 -- 1) 직원명 '이태임' 인 사원의 부서코드
 SELECT dept_code
 FROM employee
-WHERE empt_name = '이태임';
+WHERE emp_name = '이태임';
 
 -- 2) 사원의 사원번호, 직원명, 이메일, 전화번호를 조회하시오.
 
@@ -665,14 +665,35 @@ FROM employee e
     LEFT JOIN department d ON e.dept_code = d.dept_id
     JOIN job j USING(job_code);
 
+-- 데이터 사전 뷰
+SELECT *
+FROM user_tables
+WHERE table_name LIKE '%EMP%';
 
+-- 뷰 생성하기
+-- 사원, 부서 테이블 조인한 결과를 뷰로 생성
+-- 1. 사원, 부서 테이블 조인
+SELECT e.emp_id
+      ,e.emp_name
+      ,d.dept_id
+      ,d.dept_title
+FROM employee e
+     LEFT JOIN department d ON e.dept_code = d.dept_id;
 
+-- 2. 뷰로 생성
+CREATE VIEW v_emp_dept AS
+SELECT e.emp_id
+      ,e.emp_name
+      ,d.dept_id
+      ,d.dept_title
+FROM employee e
+     LEFT JOIN department d ON e.dept_code = d.dept_id;
 
+-- 3. 뷰 조회
+SELECT * FROM v_emp_dept;
 
-
-
-
-
+-- 뷰 삭제
+DROP VIEW v_emp_dept;
 
 
 
